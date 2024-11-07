@@ -12,13 +12,19 @@ def get_table_names():
     return [table[0] for table in tables]
 
 # Function to get quiz questions from the selected table
+# Function to get quiz questions from the selected table
 def get_quiz_questions(table_name):
     conn = sqlite3.connect('programming_quiz.db')
     cursor = conn.cursor()
-    cursor.execute(f"SELECT * FROM {table_name}")
+
+    # Enclose the table name in double quotes to avoid syntax errors if it starts with a number
+    cursor.execute(f'SELECT * FROM "{table_name}"')
+    
     questions = cursor.fetchall()
     conn.close()
+    print(f"Retrieved {len(questions)} questions from {table_name}")
     return questions
+
 
 # Function to display the quiz window
 def display_quiz(table_name):
@@ -30,10 +36,16 @@ def display_quiz(table_name):
     current_question = [0]  # To track current question index
     score = [0]  # To track the user's score
 
+    if not questions:
+        messagebox.showerror("Error", "No questions found for this table.")
+        quiz_window.destroy()
+        return
+
     # Function to display the next question
     def show_question():
         if current_question[0] < len(questions):
             q_id, question, option1, option2, option3, option4, correct_answer = questions[current_question[0]]
+            print(f"Displaying question {current_question[0] + 1}: {question}")
             question_label.config(text=question)
             radio_var.set(None)  # Reset radio button selection
             radio_button1.config(text=option1, value=option1)
