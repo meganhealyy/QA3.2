@@ -99,7 +99,7 @@ def display_quiz(table_name):
 # Main window
 root = tk.Tk()
 root.title("Quiz Bowl - Select Table")
-root.geometry("800x600")
+root.geometry("300x300")
 
 tables = get_table_names()
 
