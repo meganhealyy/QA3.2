@@ -73,6 +73,7 @@ def display_quiz(table_name):
 # Step 2: Create the Main Window and Show the List of Tables
 root = tk.Tk()
 root.title("Quiz Bowl - Select Table")
+root.geometry("800x600")
 
 tables = get_table_names()
 
